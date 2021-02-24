@@ -2,6 +2,7 @@ package ru.krus.sterlitamaknews;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.text.LineBreaker;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -101,7 +102,7 @@ public class NewsDetailed extends AppCompatActivity {
 
         tvImageText = findViewById(R.id.tvImageText);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            text_news.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
+            text_news.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
         }
     }
 
