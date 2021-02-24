@@ -157,7 +157,7 @@ public class NewsDetailed extends AppCompatActivity {
             {
                 ivNews = findViewById(R.id.ivNews);
                 content = doc.select("div[id=wrapper]").select("div[id=middle]").select("div[id=container]").select("div[id=content]").select("div[id=story]");
-                imageLink = doc.select("div[class=stext]").select("img").attr("src");
+                imageLink = doc.select("div[class=stext]").select("img[class=lazyload]").attr("data-src");
                 startText = doc.select("div[class=stitle]").select("small").text();
                 //imageText = doc.select("div[class=c-page-content__content]").select("figure").select("figcaption").text();
                 tvNewsDetailed = content.select("div[class=stext]").text();

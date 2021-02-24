@@ -15,7 +15,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8177580744927555~7636166187" />
+            android:value="ca-app-pub-4308845933636349~6513704162" />
 
         <activity android:name=".About" />
         <activity android:name=".AfishaDetailed" />
