@@ -1,4 +1,4 @@
-package ru.krus.sterlitamaknews;
+package ru.krus.newssterlitamak;
 
 import android.content.Context;
 import android.net.Uri;
@@ -13,14 +13,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class NewsAdapter extends BaseAdapter {
+public class AfishaAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
-    ArrayList<News> objects;
+    ArrayList<Afisha> objects;
 
-    NewsAdapter(Context context, ArrayList<News> news){
+    AfishaAdapter(Context context, ArrayList<Afisha> afishas){
         ctx = context;
-        objects = news;
+        objects = afishas;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -44,16 +44,18 @@ public class NewsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view==null){
-            view = lInflater.inflate(R.layout.item, parent, false);
+            view = lInflater.inflate(R.layout.item_afisha, parent, false);
         }
-        News n = getNews(position);
-        ((TextView) view.findViewById(R.id.row_tv_title)).setText(n.title);
-        ((TextView) view.findViewById(R.id.row_tv_additional)).setText(n.additional);
-        Picasso.get().load(Uri.parse(n.image)).into((ImageView)view.findViewById(R.id.row_img));
+        Afisha n = getAfisha(position);
+        ((TextView) view.findViewById(R.id.tvArtist)).setText(n.artist);
+        ((TextView) view.findViewById(R.id.placeArtist)).setText(n.place);
+        ((TextView) view.findViewById(R.id.dateArtist)).setText(n.date);
+        ((TextView) view.findViewById(R.id.priceArtist)).setText(n.price);
+        Picasso.get().load(Uri.parse(n.image)).into((ImageView)view.findViewById(R.id.imgArtist));
         return view;
     }
 
-    News getNews(int position) {
-        return ((News) getItem(position));
+    Afisha getAfisha(int position) {
+        return ((Afisha) getItem(position));
     }
 }

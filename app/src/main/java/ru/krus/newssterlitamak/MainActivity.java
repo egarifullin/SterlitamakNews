@@ -1,4 +1,4 @@
-package ru.krus.sterlitamaknews;
+package ru.krus.newssterlitamak;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,11 +14,9 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.BuildCompat;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -46,16 +44,13 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
-import ru.krus.sterlitamaknews.News;
-import ru.krus.sterlitamaknews.R;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public Elements content;
-    public ArrayList<News> news = new ArrayList<ru.krus.sterlitamaknews.News>();
-    ru.krus.sterlitamaknews.NewsAdapter adapter;
+    public ArrayList<News> news = new ArrayList<ru.krus.newssterlitamak.News>();
+    ru.krus.newssterlitamak.NewsAdapter adapter;
     public ArrayList<Afisha> afishas = new ArrayList<Afisha>();
-    ru.krus.sterlitamaknews.AfishaAdapter adapter_afisha;
+    ru.krus.newssterlitamak.AfishaAdapter adapter_afisha;
     private ListView lv;
     private TextView tvNocomm;
     Document doc = null;
@@ -431,7 +426,7 @@ public class MainActivity extends AppCompatActivity
                         {
                             dateNews = contents.text().replace(contents.select("a").select("h2").text(), "").substring(1,15);
                         }
-                        news.add(new ru.krus.sterlitamaknews.News(contents.select("a").select("h2").text(),
+                        news.add(new ru.krus.newssterlitamak.News(contents.select("a").select("h2").text(),
                                 contents.text().replace(contents.select("a").select("h2").text(), "").substring(14),
                                 dateNews,
                                 contents.select("img").attr("src"),
@@ -481,7 +476,7 @@ public class MainActivity extends AppCompatActivity
                     if (contents.select("div[class=js-grid-news-content]").text() != "") {
                         String img = contents.select("div[class=c-news-card__img-inner]").attr("style");
                         //Log.d(LOG_TAG,img.substring(23,img.length()-3));
-                        afishas.add(new ru.krus.sterlitamaknews.Afisha(contents.select("h3[class=c-news-card__header]").text(),
+                        afishas.add(new ru.krus.newssterlitamak.Afisha(contents.select("h3[class=c-news-card__header]").text(),
                                 contents.select("time[class=c-news-card__concert-info-p]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p c-news-card__concert-info-location]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p]").text(),
@@ -514,7 +509,7 @@ public class MainActivity extends AppCompatActivity
                     if (contents.select("div[class=js-grid-news-content]").text() != "") {
                         String img = contents.select("div[class=c-news-card__img-inner]").attr("style");
                         //Log.d(LOG_TAG,img.substring(23,img.length()-3));
-                        afishas.add(new ru.krus.sterlitamaknews.Afisha(contents.select("h3[class=c-news-card__header]").text(),
+                        afishas.add(new ru.krus.newssterlitamak.Afisha(contents.select("h3[class=c-news-card__header]").text(),
                                 contents.select("time[class=c-news-card__concert-info-p]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p c-news-card__concert-info-location]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p]").text(),
@@ -547,7 +542,7 @@ public class MainActivity extends AppCompatActivity
                     if (contents.select("div[class=js-grid-news-content]").text() != "") {
                         String img = contents.select("div[class=c-news-card__img-inner]").attr("style");
                         //Log.d(LOG_TAG,img.substring(23,img.length()-3));
-                        afishas.add(new ru.krus.sterlitamaknews.Afisha(contents.select("h3[class=c-news-card__header]").text(),
+                        afishas.add(new ru.krus.newssterlitamak.Afisha(contents.select("h3[class=c-news-card__header]").text(),
                                 contents.select("time[class=c-news-card__concert-info-p]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p c-news-card__concert-info-location]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p]").text(),
@@ -580,7 +575,7 @@ public class MainActivity extends AppCompatActivity
                     if (contents.select("div[class=js-grid-news-content]").text() != "") {
                         String img = contents.select("div[class=c-news-card__img-inner]").attr("style");
                         //Log.d(LOG_TAG,img.substring(23,img.length()-3));
-                        afishas.add(new ru.krus.sterlitamaknews.Afisha(contents.select("h3[class=c-news-card__header]").text(),
+                        afishas.add(new ru.krus.newssterlitamak.Afisha(contents.select("h3[class=c-news-card__header]").text(),
                                 contents.select("time[class=c-news-card__concert-info-p]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p c-news-card__concert-info-location]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p]").text(),
@@ -613,7 +608,7 @@ public class MainActivity extends AppCompatActivity
                     if (contents.select("div[class=js-grid-news-content]").text() != "") {
                         String img = contents.select("div[class=c-news-card__img-inner]").attr("style");
                         //Log.d(LOG_TAG,img.substring(23,img.length()-3));
-                        afishas.add(new ru.krus.sterlitamaknews.Afisha(contents.select("h3[class=c-news-card__header]").text(),
+                        afishas.add(new ru.krus.newssterlitamak.Afisha(contents.select("h3[class=c-news-card__header]").text(),
                                 contents.select("time[class=c-news-card__concert-info-p]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p c-news-card__concert-info-location]").text(),
                                 contents.select("p[class=c-news-card__concert-info-p]").text(),
@@ -658,7 +653,7 @@ public class MainActivity extends AppCompatActivity
                 news.clear();
                 for (Element contents: content){
                     if (contents.select("h3[class=c-news-n-card__h]").text() != "") {
-                        news.add(new ru.krus.sterlitamaknews.News(contents.select("h3[class=c-news-n-card__h]").text(),
+                        news.add(new ru.krus.newssterlitamak.News(contents.select("h3[class=c-news-n-card__h]").text(),
                                 contents.select("h3[class=c-news-n-card__h]").text(),
                                 contents.select("div[class=c-news-n-card__cat]").text() + " | " + contents.select("span[class=c-news-n-card__date-time]").text(),
                                 "https://gorobzor.ru" + contents.select("div[class=c-news-n-card__image]").select("div[class=c-news-n-card__image-inner]").select("img").attr("src"),
@@ -693,7 +688,7 @@ public class MainActivity extends AppCompatActivity
                 lv = (ListView) findViewById(R.id.lvNews);
                 NewThread newThread = new NewThread();
                 newThread.execute();
-                adapter = new ru.krus.sterlitamaknews.NewsAdapter(MainActivity.this, news);
+                adapter = new ru.krus.newssterlitamak.NewsAdapter(MainActivity.this, news);
             }
         });
 
@@ -701,12 +696,12 @@ public class MainActivity extends AppCompatActivity
 
         NewThread newThread = new NewThread();
         newThread.execute();
-        adapter = new ru.krus.sterlitamaknews.NewsAdapter(this, news);
+        adapter = new ru.krus.newssterlitamak.NewsAdapter(this, news);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                       @Override
                                       public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                                          Intent intent = new Intent(MainActivity.this, ru.krus.sterlitamaknews.NewsDetailed.class);
+                                          Intent intent = new Intent(MainActivity.this, ru.krus.newssterlitamak.NewsDetailed.class);
                                           intent.putExtra("title", news.get(position).title);
                                           intent.putExtra("link", news.get(position).link);
                                           intent.putExtra("add", news.get(position).additional);
@@ -726,7 +721,7 @@ public class MainActivity extends AppCompatActivity
                 lv = (ListView) findViewById(R.id.lvNews);
                 NewThreadWeather newThread = new NewThreadWeather();
                 newThread.execute();
-                adapter = new ru.krus.sterlitamaknews.NewsAdapter(MainActivity.this, news);
+                adapter = new ru.krus.newssterlitamak.NewsAdapter(MainActivity.this, news);
             }
         });
 
@@ -734,12 +729,12 @@ public class MainActivity extends AppCompatActivity
 
         NewThreadWeather newThread = new NewThreadWeather();
         newThread.execute();
-        adapter = new ru.krus.sterlitamaknews.NewsAdapter(this, news);
+        adapter = new ru.krus.newssterlitamak.NewsAdapter(this, news);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                       @Override
                                       public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                                          Intent intent = new Intent(MainActivity.this, ru.krus.sterlitamaknews.NewsDetailed.class);
+                                          Intent intent = new Intent(MainActivity.this, ru.krus.newssterlitamak.NewsDetailed.class);
                                           intent.putExtra("title", news.get(position).title);
                                           intent.putExtra("link", news.get(position).link);
                                           intent.putExtra("add", news.get(position).additional);
@@ -759,7 +754,7 @@ public class MainActivity extends AppCompatActivity
                 lv = (ListView) findViewById(R.id.lvNews);
                 NewThreadAfisha newThreadA = new NewThreadAfisha();
                 newThreadA.execute();
-                adapter_afisha = new ru.krus.sterlitamaknews.AfishaAdapter(MainActivity.this, afishas);
+                adapter_afisha = new ru.krus.newssterlitamak.AfishaAdapter(MainActivity.this, afishas);
             }
         });
 
@@ -767,12 +762,12 @@ public class MainActivity extends AppCompatActivity
 
         NewThreadAfisha newThreadA = new NewThreadAfisha();
         newThreadA.execute();
-        adapter_afisha = new ru.krus.sterlitamaknews.AfishaAdapter(MainActivity.this, afishas);
+        adapter_afisha = new ru.krus.newssterlitamak.AfishaAdapter(MainActivity.this, afishas);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                       @Override
                                       public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                                          Intent intent = new Intent(MainActivity.this, ru.krus.sterlitamaknews.AfishaDetailed.class);
+                                          Intent intent = new Intent(MainActivity.this, ru.krus.newssterlitamak.AfishaDetailed.class);
                                           intent.putExtra("title", afishas.get(position).artist);
                                           intent.putExtra("link", afishas.get(position).link);
                                           intent.putExtra("date", afishas.get(position).date);

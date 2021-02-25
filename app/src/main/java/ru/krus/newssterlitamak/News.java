@@ -1,4 +1,4 @@
-package ru.krus.sterlitamaknews;
+package ru.krus.newssterlitamak;
 
 public class News {
     String title;

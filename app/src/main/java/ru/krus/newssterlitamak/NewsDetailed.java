@@ -1,4 +1,4 @@
-package ru.krus.sterlitamaknews;
+package ru.krus.newssterlitamak;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,12 +8,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -26,54 +26,39 @@ import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
-public class AfishaDetailed extends AppCompatActivity {
-
-    TextView title_afisha;
-    TextView date_afisha;
-    TextView time_afisha;
-    TextView place_afisha;
-    TextView price_afisha;
-    ImageView ivAfisha;
-    String time_temp;
-    SharedPreferences sp;
+public class NewsDetailed extends AppCompatActivity {
+    TextView title_news;
+    TextView text_news;
+    TextView text_add;
+    ImageView ivNews;
     public Elements content;
-    public Elements contentTime;
     public ArrayList<String> link = new ArrayList<String>();
-    String timeAfisha;
-    String tvAfishaDetailed;
+    String tvNewsDetailed;
     String imageLink;
     String imageText;
+    String startText;
     int count_element;
     final String LOG_TAG = "myLogs";
-    TextView tvAfishaText;
+    TextView tvImageText;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private AdView mAdView;
+    SharedPreferences sp;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_afisha_detailed);
+        setContentView(R.layout.activity_news_detailed);
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
         }
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshAfishaDetailed);
-        mSwipeRefreshLayout.setRefreshing(true);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                NewThreadDetailed newThread = new NewThreadDetailed();
-                newThread.execute();
-            }
-        });
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -83,27 +68,40 @@ public class AfishaDetailed extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        title_afisha = findViewById(R.id.titleAfisha);
-        title_afisha.setText(getIntent().getStringExtra("title"));
-        date_afisha = findViewById(R.id.tvAfishaDateNum);
-        date_afisha.setText(getIntent().getStringExtra("date"));
-        place_afisha = findViewById(R.id.tvAfishaPlaceLoc);
-        place_afisha.setText(getIntent().getStringExtra("place"));
-        price_afisha = findViewById(R.id.tvAfishaPriceNum);
-        price_afisha.setText(getIntent().getStringExtra("price").substring(6));
-        tvAfishaText = findViewById(R.id.tvAfishaText);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshNews);
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                NewThreadDetailed newThread = new NewThreadDetailed();
+                newThread.execute();
+            }
+        });
+
+        title_news = findViewById(R.id.titleNews);
+        title_news.setText(getIntent().getStringExtra("title"));
+
+        NewThreadDetailed newThreadNews = new NewThreadDetailed();
+        newThreadNews.execute();
+        /*
+        text_add = findViewById(R.id.tvAdd);
+        text_add.setText(getIntent().getStringExtra("add"));*/
+
+        text_news = findViewById(R.id.tvNewsText);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         Boolean bigText = sp.getBoolean("bigText",false);
         if (bigText){
-            tvAfishaText.setTextSize(getResources().getDimension(R.dimen.big_text));
+            text_news.setTextSize(getResources().getDimension(R.dimen.big_text));
         }else{
-            tvAfishaText.setTextSize(getResources().getDimension(R.dimen.normal_text));
+            text_news.setTextSize(getResources().getDimension(R.dimen.normal_text));
         }
+
+        tvImageText = findViewById(R.id.tvImageText);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            tvAfishaText.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
+            text_news.setJustificationMode(LineBreaker.JUSTIFICATION_MODE_INTER_WORD);
         }
-        NewThreadDetailed newThreadAfisha = new NewThreadDetailed();
-        newThreadAfisha.execute();
     }
 
     @Override
@@ -144,36 +142,30 @@ public class AfishaDetailed extends AppCompatActivity {
 
             } catch (SocketTimeoutException e){
                 e.printStackTrace();
-                // Toast.makeText(getApplicationContext(), "Нет соединения!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Ошибка соединения!", Toast.LENGTH_SHORT).show();
             }catch (IOException e){
                 e.printStackTrace();
-                //Toast.makeText(getApplicationContext(), "Нет соединения!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Ошибка соединения!", Toast.LENGTH_SHORT).show();
             }catch (NullPointerException e){
                 e.printStackTrace();
+                //Toast.makeText(getApplicationContext(), "Ошибка соединения!", Toast.LENGTH_SHORT).show();
             }
 
             if (doc != null)
             {
-                ivAfisha = findViewById(R.id.ivAfisha);
-                imageLink = doc.select("div[class=c-shedule-affiche__icon]").select("span").attr("style");
-                time_afisha = findViewById(R.id.tvAfishaTimeNum);
-                contentTime = doc.select("p[class=c-shedule-affiche__desc-item]");
-                int count = 0;
-                for (Element contents: contentTime){
-                    if (count == 1)
-                    {
-                        time_temp = contents.text().substring(6);
-                    }
-                    count = count + 1;
-                }
-                content = doc.select("div[class=c-shedule-affiche__desc c-shedule-affiche__desc-full]").select("p");
-                tvAfishaDetailed = "";
+                ivNews = findViewById(R.id.ivNews);
+                content = doc.select("div[id=wrapper]").select("div[id=middle]").select("div[id=container]").select("div[id=content]").select("div[id=story]");
+                imageLink = doc.select("div[class=stext]").select("img[class=lazyload]").attr("data-src");
+                startText = doc.select("div[class=stitle]").select("small").text();
+                //imageText = doc.select("div[class=c-page-content__content]").select("figure").select("figcaption").text();
+                tvNewsDetailed = content.select("div[class=stext]").text();
+                /*count_element = 0;
                 for (Element contents: content){
-                    if (contents.text().contains("Дорогие читатели!" )!= true)
-                    {
-                            tvAfishaDetailed = tvAfishaDetailed + contents.text() + "\n" + "\n";
-                    }
-                }
+                    if (count_element != 0 ) {
+                            tvNewsDetailed = tvNewsDetailed + contents.select("div[class=stext]").text() + "\n" + "\n";
+                        }
+                    count_element = count_element + 1;
+                }*/
             }
             else {
                // Toast.makeText(getApplicationContext(), "Нет соединения!", Toast.LENGTH_LONG).show();
@@ -184,10 +176,14 @@ public class AfishaDetailed extends AppCompatActivity {
         protected void onPostExecute(String result){
             super.onPostExecute(result);
             /*if (doc!=null) {*/
-                tvAfishaText.setText(tvAfishaDetailed);
-                time_afisha.setText(time_temp);
+                text_news.setText(tvNewsDetailed);
+                tvImageText.setText(imageText);
                 mSwipeRefreshLayout.setRefreshing(false);
-                Picasso.get().load(Uri.parse(imageLink.substring(23,imageLink.length()-3))).into(ivAfisha);
+                text_add = findViewById(R.id.tvAdd);
+                text_add.setText(startText);
+                if (imageLink != null) {
+                    Picasso.get().load(Uri.parse(imageLink)).into(ivNews);
+                }
             /*}
             else
             {
@@ -195,6 +191,5 @@ public class AfishaDetailed extends AppCompatActivity {
             }
             mSwipeRefreshLayout.setRefreshing(false);*/
         }
-
     }
 }

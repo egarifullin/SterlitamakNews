@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.krus.sterlitamaknews">
+    package="ru.krus.newssterlitamak">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,17 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PrefActivity"></activity>
+        <activity android:name="ru.krus.newssterlitamak.PrefActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-4308845933636349~6513704162" />
 
-        <activity android:name=".About" />
-        <activity android:name=".AfishaDetailed" />
-        <activity android:name=".NewsDetailed" />
+        <activity android:name="ru.krus.newssterlitamak.About" />
+        <activity android:name="ru.krus.newssterlitamak.AfishaDetailed" />
+        <activity android:name="ru.krus.newssterlitamak.NewsDetailed" />
         <activity
-            android:name=".MainActivity"
+            android:name="ru.krus.newssterlitamak.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -1,4 +1,4 @@
-package ru.krus.sterlitamaknews;
+package ru.krus.newssterlitamak;
 
 import android.content.SharedPreferences;
 import android.os.Build;
