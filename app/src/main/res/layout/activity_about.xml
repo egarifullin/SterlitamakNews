@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,6 +8,9 @@
     tools:context=".About"
     android:background="@color/colorPrimary">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ImageView
         android:id="@+id/ivAbout"
         android:layout_width="wrap_content"
@@ -119,6 +122,32 @@
         tools:layout_editor_absoluteX="8dp" />
 
     <TextView
+        android:id="@+id/tvAboutSite2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivAbout"
+        android:layout_alignStart="@id/ivAbout"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/contacts"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        android:singleLine="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider1"
+        />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@+id/tvAboutSite2"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <TextView
         android:id="@+id/tvVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,11 +155,12 @@
         android:layout_alignStart="@id/ivAbout"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="Версия: "
         android:textColor="@color/colorText"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/divider1"
+        app:layout_constraintTop_toTopOf="@+id/divider2"
         android:background="@color/colorPrimary"/>
 
     <com.google.android.gms.ads.AdView
@@ -150,3 +180,4 @@
     </com.google.android.gms.ads.AdView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
